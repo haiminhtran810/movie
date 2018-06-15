@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/hcm-102-0006/note_Hai/Movie_Movie_DB/app/src/main/shaders"/></dataSet><dataSet config="stg"><source path="/home/hcm-102-0006/note_Hai/Movie_Movie_DB/app/src/stg/shaders"/></dataSet><dataSet config="debug"><source path="/home/hcm-102-0006/note_Hai/Movie_Movie_DB/app/src/debug/shaders"/></dataSet><dataSet config="stgDebug"><source path="/home/hcm-102-0006/note_Hai/Movie_Movie_DB/app/src/stgDebug/shaders"/></dataSet></merger>

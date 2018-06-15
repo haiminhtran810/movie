@@ -1,0 +1,111 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  flavorDimensions "default"
+  buildToolsVersion rootProject.ext.buidToolsVersion
+
+  defaultConfig {
+    applicationId "home.money.hmt.movie_movie_db"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  signingConfigs {
+    release {
+      keyAlias 'key0'
+      keyPassword '123456'
+      storeFile file('/home/hcm-102-0006/fileJar/android_demo_hyd.jks')
+      storePassword '123456'
+    }
+  }
+
+  buildTypes {
+
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
+    }
+
+  }
+  productFlavors {
+
+    dev {
+      versionCode rootProject.ext.versionCode_dev
+      versionName rootProject.ext.versionName_dev
+      applicationIdSuffix = ".dev"
+      resValue "string", "app_name", "Movie DB dev"
+    }
+
+    pro {
+      versionCode rootProject.ext.versionCode_product
+      versionName rootProject.ext.versionName_product
+      applicationIdSuffix = ".pro"
+      resValue "string", "app_name", "Movie DB dev"
+    }
+
+    stg {
+      versionCode rootProject.ext.versionCode_dev
+      versionName rootProject.ext.versionName_dev
+      applicationIdSuffix = ".stg"
+      resValue "string", "app_name", "Movie DB dev"
+    }
+  }
+
+  productFlavors.all {}
+
+  applicationVariants.all { variant ->
+    def BASE_URL
+    def SMALL_IMAGE_URL
+    def LARGE_IMAGE_URL
+    def ORIGINAL_IMAGE_URL
+    def TMBD_API_KEY
+
+    if (variant.getName().contains("dev")) {
+      BASE_URL = "https://api.themoviedb.org/"
+    } else if (variant.getName().contains("stg")) {
+      BASE_URL = "https://api.themoviedb.org/"
+    } else if (variant.getName().contains("prd")) {
+      BASE_URL = "https://api.themoviedb.org/"
+    }
+
+    SMALL_IMAGE_URL = "https://image.tmdb.org/t/p/w200"
+    LARGE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+    ORIGINAL_IMAGE_URL = "https://image.tmdb.org/t/p/original"
+    TMBD_API_KEY = '"' + KeyMovieDB + '"' ?: '"Define your key"'
+
+
+    variant.buildConfigField "String", "BASE_URL", "\"${BASE_URL}\""
+    variant.buildConfigField "String", "SMALL_IMAGE_URL", "\"${SMALL_IMAGE_URL}\""
+    variant.buildConfigField "String", "LARGE_IMAGE_URL", "\"${LARGE_IMAGE_URL}\""
+    variant.buildConfigField "String", "ORIGINAL_IMAGE_URL", "\"${ORIGINAL_IMAGE_URL}\""
+    variant.buildConfigField "String", "TMBD_API_KEY", TMBD_API_KEY
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  dataBinding {
+    enabled = true
+  }
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation 'com.android.support:appcompat-v7:26.1.0'
+  implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation 'com.android.support.test:runner:1.0.2'
+  compile 'io.reactivex.rxjava2:rxjava:2.1.1'
+  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+  compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+  compile 'com.squareup.retrofit2:retrofit:2.3.0'
+  compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+  compile 'com.google.code.gson:gson:2.7'
+  compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+}
